@@ -1,5 +1,6 @@
 package stc.test.socialmedia.friendshiprequest.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class FriendsRemovalController {
 
     private final UserService userService;
 
+    @Operation(summary = "Get list of friends of authorized user")
     @GetMapping
     @Transactional
     public List<ResponseUserTo> getUserFriends(JwtUser user, @PathVariable(required = false) Long userId) {
@@ -31,7 +33,7 @@ public class FriendsRemovalController {
         long id = userId!=null?userId:user.getId();
         return UserUtil.getResponseTos(userService.getFriendsOfUser(id));
     }
-
+    @Operation(summary = "Remove user with provided id from friendlst of authorized user")
     @DeleteMapping
     @Transactional
     public void removeFromFriends(JwtUser user, @RequestParam long friendId) {

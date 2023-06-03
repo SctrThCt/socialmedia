@@ -1,5 +1,6 @@
 package stc.test.socialmedia.messaging.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import stc.test.socialmedia.auth.model.JwtUser;
@@ -17,12 +18,14 @@ public class DialogRequestRestController {
 
     private final DialogRequestService dialogRequestService;
 
+    @Operation(summary = "Send request to messaging to user in freindlist of authorized user")
     @PostMapping("/send")
     public DialogRequestTo sendRequest(JwtUser jwtUser,
                                        @RequestParam long userId) {
         return new DialogRequestTo(dialogRequestService.sendRequest(jwtUser.id(), userId));
     }
 
+    @Operation(summary = "Accept request to messaging with provided id with authorized user")
     @PostMapping("/{requestId}/accept")
     public void acceptRequest(JwtUser jwtUser,
                               @PathVariable long requestId) {
