@@ -1,0 +1,49 @@
+#  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+jwt:
+  private.key: classpath:keys/jwt.pem
+  public.key: classpath:keys/jwt.pub
+  expiry: 86400 # expiration in second
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      location: C:/Projects/socialmedia/uploads #указать своё
+      max-file-size: 10MB
+      max-request-size: 10MB
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+    open-in-view: false
+    # https://stackoverflow.com/a/67678945/548473
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
+        jdbc.batch_size: 20
+  datasource:
+    url: jdbc:postgresql://localhost:5432/socialmedia #указать своё
+    username: user #указать своё
+    password: password #указать своё
+
+  # Jackson Serialization Issue Resolver
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none
+logging:
+  level:
+    root: WARN
+    stc.test.socialmedia: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG
+    org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
