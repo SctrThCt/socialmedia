@@ -25,7 +25,7 @@ import static stc.test.socialmedia.util.ValidationUtil.assureIdConsistent;
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class ProfileController extends AbstractUserController {
+public class ProfileController {
     public static final String REST_URL = "/api/profile";
 
     private final UserService userService;
@@ -33,20 +33,20 @@ public class ProfileController extends AbstractUserController {
     @GetMapping
     @Operation(summary = "Get authorized user")
     public User get(JwtUser jwtUser) {
-        return findByJwtUser(jwtUser);
+        return userService.findByJwtUser(jwtUser);
     }
 
     @GetMapping("/subscriptions")
     @Operation(summary = "Get subscription of authorized user")
-    public Set<ResponseUserTo> getSubsriptions(JwtUser jwtUser) {
-        return findByJwtUser(jwtUser).getSubscriptions().stream().map(u -> new ResponseUserTo(u)).collect(Collectors.toSet());
+    public Set<ResponseUserTo> getSubscriptions(JwtUser jwtUser) {
+        return userService.findByJwtUser(jwtUser).getSubscriptions().stream().map(u -> new ResponseUserTo(u)).collect(Collectors.toSet());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete authorized user")
     public void delete(JwtUser jwtUser) {
-        super.delete(jwtUser.id());
+        userService.delete(jwtUser.id());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -55,8 +55,8 @@ public class ProfileController extends AbstractUserController {
     @Operation(summary = "Update authorized user")
     public void update(@RequestBody @Valid RequestUserTo requestUserTo, JwtUser jwtUser) {
         assureIdConsistent(requestUserTo, jwtUser.id());
-        User user = findByJwtUser(jwtUser);
-        prepareAndSave(UserUtil.updateFromTo(user, requestUserTo));
+        User user = userService.findByJwtUser(jwtUser);
+        userService.prepareAndSave(UserUtil.updateFromTo(user, requestUserTo));
     }
 
     @Transactional

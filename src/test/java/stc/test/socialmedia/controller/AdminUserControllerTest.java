@@ -52,7 +52,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
     void deleteNotFound() throws Exception {
         performJwt(MockMvcRequestBuilders.delete(REST_URL_SLASH + NOT_FOUND), admin)
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isNotFound());
     }
 
     @Test
