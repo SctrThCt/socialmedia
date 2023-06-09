@@ -48,7 +48,7 @@ public abstract class BaseEntity implements Persistable<Long>, HasId {
 
     @Override
     public int hashCode() {
-        return id == null ? 0 : id.intValue();
+        return getClass().hashCode();
     }
 
     @Override

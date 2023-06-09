@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import lombok.experimental.UtilityClass;
+import stc.test.socialmedia.post.model.Post;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,5 +71,15 @@ public class JsonUtil {
         });
         map.putAll(addProps);
         return writeValue(map);
+    }
+
+    public static <T> List<T> extractFromPage(String json, Class <T> clazz) throws JsonProcessingException {
+        Map<String,Object> objectMap= mapper.readValue(json, Map.class);
+        List<Object> objectList = (List<Object>) objectMap.get("content");
+        List<T> resultList = new ArrayList<>();
+        for(Object o:objectList) {
+            resultList.add(mapper.convertValue(o,clazz));
+        }
+        return resultList;
     }
 }

@@ -20,7 +20,7 @@ import java.io.IOException;
 public class PostRestController {
     public final static String FEED_URL = "/api/feed";
     public final static String REST_URL = "/api/post";
-    public final static String PROFILE_URL = "/api/profile/{userId}";
+    public final static String PROFILE_URL = "/api/profile";
     private final PostService postService;
 
     @Operation(summary = "Get posts from subscriptions of authorized user")
@@ -36,7 +36,7 @@ public class PostRestController {
     }
 
     @Operation(summary = "Get all posts from provided user id")
-    @GetMapping(value = PROFILE_URL)
+    @GetMapping(value = PROFILE_URL+"/{userId}")
     public Page<Post> getAllUsersPost(@PathVariable long userId,
                                       @RequestParam(required = false, defaultValue = "0") int pageNumber,
                                       @RequestParam(required = false, defaultValue = "20") int pageSize,
