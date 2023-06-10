@@ -38,7 +38,8 @@ public class OpenApiConfig {
                                     API для получения токена
                                     <p>Тестовые креденшелы:<br>
                                        - user@yandex.ru.com / password<br>
-                                       - admin@gmail.com / admin
+                                       - admin@gmail.com / admin<br>
+                                       - third@th.rd / the_third
                                     </p>
                                     """));
 
